@@ -1,0 +1,275 @@
+{
+	"id": "4f999fc0-75cb-4b45-ad34-cdb2d306e8d5",
+	"name": "Restful-Booker",
+	"description": null,
+	"auth": null,
+	"events": null,
+	"variables": null,
+	"order": [
+		"ed4b11fb-9e04-4ec2-9489-cd852d397c0a",
+		"0b3e6aa7-f83d-4561-8b07-7048da8eac11",
+		"6c2c7ea9-2265-43b8-96ac-1127e86ed6cb",
+		"be804213-1fe7-450e-a552-e3f736cd9b33",
+		"642f9d25-ca86-4a6b-b288-10113d2f02a9",
+		"157f206e-2ed6-45f4-8341-6d58cfea79da",
+		"8d881370-98b6-43f9-bbd0-7d948a6c7b14"
+	],
+	"folders_order": [],
+	"folders": [],
+	"requests": [
+		{
+			"id": "0b3e6aa7-f83d-4561-8b07-7048da8eac11",
+			"name": "get_booking",
+			"url": "{{base_url}}/booking",
+			"description": "",
+			"data": null,
+			"dataMode": "params",
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "375b840f-682d-44cf-8272-b18d8abb6ddf",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response have JSON body\", function () {",
+							"    pm.response.to.have.jsonBody()",
+							"});"
+						]
+					}
+				}
+			],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "157f206e-2ed6-45f4-8341-6d58cfea79da",
+			"name": "update booking",
+			"url": "{{base_url}}/booking/{{id}}",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Cookie",
+					"value": "token={{token}}",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"method": "PUT",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\r\n  \"firstname\" : \"Sally\",\r\n\t\"lastname\" : \"Brown\",\r\n\t\"totalprice\" : 111,\r\n\t\"depositpaid\" : true,\r\n\t\"additionalneeds\" : \"Breakfast\",\r\n\t\"bookingdates\" : {\r\n\t\t\"checkin\" : \"2013-02-23\",\r\n\t\t\"checkout\" : \"2014-10-23\"\r\n\t}\r\n}",
+			"headers": "Cookie: token={{token}}\nContent-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "642f9d25-ca86-4a6b-b288-10113d2f02a9",
+			"name": "auth",
+			"url": "{{base_url}}/auth",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3f2c2d4a-5ad0-40ce-8075-2b49d80e2a16",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"password123\"\r\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "6c2c7ea9-2265-43b8-96ac-1127e86ed6cb",
+			"name": "create booking",
+			"url": "{{base_url}}/booking",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7eb2b23d-7339-4db8-8567-2f1c328dbe51",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"id\", jsonData.bookingid);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "{\r\n  \"firstname\" : \"Sally\",\r\n\t\"lastname\" : \"Brown\",\r\n\t\"totalprice\" : 111,\r\n\t\"depositpaid\" : true,\r\n\t\"additionalneeds\" : \"Breakfast\",\r\n\t\"bookingdates\" : {\r\n\t\t\"checkin\" : \"2013-02-23\",\r\n\t\t\"checkout\" : \"2014-10-23\"\r\n\t}\r\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "8d881370-98b6-43f9-bbd0-7d948a6c7b14",
+			"name": "delete booking",
+			"url": "{{base_url}}booking/{{id}}",
+			"description": "",
+			"data": null,
+			"dataMode": "params",
+			"headerData": [
+				{
+					"key": "Cookie",
+					"value": "token={{token}}",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"method": "DELETE",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "95f1a43f-21a1-4bb9-a7ea-7f79aa4c9c5a",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						]
+					}
+				}
+			],
+			"folder": null,
+			"headers": "Cookie: token={{token}}\nContent-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "be804213-1fe7-450e-a552-e3f736cd9b33",
+			"name": "get booking id",
+			"url": "{{base_url}}/booking/{{id}}",
+			"description": "",
+			"data": null,
+			"dataMode": "params",
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0dae8979-8093-48e0-a1f0-e4bf21d439ae",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "ed4b11fb-9e04-4ec2-9489-cd852d397c0a",
+			"name": "ping",
+			"url": "{{base_url}}/ping",
+			"description": "",
+			"data": null,
+			"dataMode": "params",
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "158850a3-44ea-47bb-a73d-8373d1e845ad",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Status code name has Created\", function () {",
+							"    pm.response.to.have.status(\"Created\");",
+							"});",
+							"",
+							"pm.test(\"Body is correct\", function () {",
+							"    pm.response.to.have.body(\"Created\");",
+							"});"
+						]
+					}
+				}
+			],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		}
+	]
+}
